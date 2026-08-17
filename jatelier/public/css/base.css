@@ -1,0 +1,140 @@
+/* Jartelier — lenguaje visual compartido por todas las pantallas */
+
+:root{
+  --crema:#E4E1D6;
+  --crema-claro:#F1EDE2;
+  --tinta:#231619;
+  --bordo:#5C161D;
+  --bordo-hondo:#3B0D12;
+  --rojo:#B22119;
+  --verde:#2F5D3A;
+  --ocre:#8A6A22;
+  --regla:rgba(35,22,25,.16);
+  --regla-fuerte:rgba(35,22,25,.34);
+  --pad:clamp(20px,5vw,72px);
+  --display:"Big Shoulders Display","Arial Narrow",sans-serif;
+  --body:"Spectral",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none !important}
+html{scroll-behavior:smooth}
+body{
+  background:var(--crema);color:var(--tinta);
+  font-family:var(--body);font-weight:300;font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+svg,img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--rojo);outline-offset:3px}
+
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.wrap{padding-left:var(--pad);padding-right:var(--pad)}
+.eyebrow{color:var(--bordo);display:flex;align-items:center;gap:12px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--regla)}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-transform:uppercase;line-height:.96;letter-spacing:-.01em}
+
+/* ---------------------------------------------------------------- botones */
+.btn{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;
+  padding:13px 21px;border:1px solid var(--bordo);background:var(--bordo);color:var(--crema);
+  cursor:pointer;transition:background .2s,color .2s,border-color .2s,opacity .2s;
+  display:inline-block;text-align:center;
+}
+.btn:hover{background:var(--rojo);border-color:var(--rojo)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--bordo);border-color:var(--regla-fuerte)}
+.btn.ghost:hover{background:var(--bordo);color:var(--crema);border-color:var(--bordo)}
+.btn.chico{padding:8px 13px;font-size:10px;letter-spacing:.14em}
+.btn.peligro{background:none;color:var(--rojo);border-color:rgba(178,33,25,.45)}
+.btn.peligro:hover{background:var(--rojo);color:var(--crema);border-color:var(--rojo)}
+.btn.ancho{width:100%}
+
+/* ------------------------------------------------------------ formularios */
+.campo{margin-bottom:20px}
+.campo label{
+  display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--bordo);opacity:.8;margin-bottom:8px;
+}
+.campo input,.campo textarea,.campo select{
+  width:100%;background:var(--crema-claro);border:1px solid var(--regla-fuerte);
+  color:var(--tinta);font-family:var(--body);font-size:16px;font-weight:300;padding:11px 13px;
+  border-radius:0;transition:border-color .2s,background .2s;
+}
+.campo select{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--bordo) 50%),linear-gradient(135deg,var(--bordo) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.campo textarea{resize:vertical;min-height:96px;line-height:1.55}
+.campo input:focus,.campo textarea:focus,.campo select:focus{outline:none;border-color:var(--bordo);background:#fff}
+.campo input::placeholder,.campo textarea::placeholder{color:rgba(35,22,25,.38)}
+.campo .ayuda{font-size:13px;opacity:.62;margin-top:6px;line-height:1.4}
+.campo.fila{display:flex;gap:12px;align-items:center}
+.campo-check{display:flex;align-items:center;gap:10px;margin-bottom:16px;cursor:pointer}
+.campo-check input{width:17px;height:17px;accent-color:var(--bordo);cursor:pointer}
+.campo-check span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.grilla-campos{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+@media(max-width:640px){.grilla-campos{grid-template-columns:1fr}}
+
+/* ---------------------------------------------------------------- avisos */
+.aviso{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;line-height:1.6;
+  padding:11px 14px;border-left:3px solid var(--bordo);background:rgba(92,22,29,.07);
+  margin-bottom:18px;
+}
+.aviso.error{border-color:var(--rojo);background:rgba(178,33,25,.09);color:var(--rojo)}
+.aviso.ok{border-color:var(--verde);background:rgba(47,93,58,.09);color:var(--verde)}
+.aviso[hidden]{display:none}
+
+/* --------------------------------------------------------------- píldoras */
+.pill{
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  padding:4px 9px;border:1px solid currentColor;display:inline-block;white-space:nowrap;
+}
+.pill.disponible{color:var(--verde)}
+.pill.reservado{color:var(--ocre)}
+.pill.vendido{color:rgba(35,22,25,.5)}
+.pill.borrador{color:var(--rojo)}
+.pill.nueva{color:var(--rojo)}
+.pill.leida{color:var(--ocre)}
+.pill.contestada{color:var(--verde)}
+.pill.cerrada{color:rgba(35,22,25,.5)}
+.pill.admin{color:var(--bordo);background:rgba(92,22,29,.1)}
+.pill.cliente{color:rgba(35,22,25,.55)}
+
+/* ------------------------------------------------------------- cabecera */
+.top{
+  position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:13px var(--pad);background:rgba(228,225,214,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--regla);
+}
+.mark{display:flex;align-items:baseline;gap:11px}
+.mark b{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:27px;letter-spacing:.05em;line-height:1;color:var(--bordo)}
+.mark span{color:var(--tinta);opacity:.6}
+@media(max-width:700px){.mark span{display:none}}
+.nav{display:flex;gap:24px}
+.nav a{color:var(--bordo);transition:color .2s}
+.nav a:hover{color:var(--rojo)}
+@media(max-width:1040px){.nav{display:none}}
+.top-acciones{display:flex;align-items:center;gap:12px}
+.top-acciones .quien{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+@media(max-width:560px){.top-acciones .quien{display:none}}
+
+/* ------------------------------------------------------------------ pie */
+.pie{border-top:1px solid var(--regla-fuerte);padding:34px var(--pad);margin-top:60px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;opacity:.65}
+
+/* --------------------------------------------------------------- cargando */
+.cargando{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  opacity:.55;padding:40px 0;text-align:center;
+}
+.vacio{
+  border:1px dashed var(--regla-fuerte);padding:44px 24px;text-align:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}

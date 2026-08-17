@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Modo empresa · Jartelier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/empresa.css">
+</head>
+<body>
+
+<div class="marco">
+  <!-- ================================================== costado -->
+  <aside class="lateral">
+    <div class="marca">
+      <b>JARTELIER</b>
+      <span>Modo empresa</span>
+    </div>
+
+    <nav class="menu" id="menu">
+      <button data-vista="resumen"  aria-current="true">Resumen</button>
+      <button data-vista="vehiculos">Vehículos <span class="globo" id="globo-vehiculos" hidden></span></button>
+      <button data-vista="consultas">Consultas <span class="globo" id="globo-consultas" hidden></span></button>
+      <button data-vista="usuarios">Usuarios</button>
+      <button data-vista="textos">Textos del sitio</button>
+      <button data-vista="ajustes">Mi cuenta</button>
+    </nav>
+
+    <div class="yo" id="yo"></div>
+
+    <div class="abajo">
+      <a href="/" target="_blank" rel="noopener">Ver el sitio ↗</a>
+      <button id="salir">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <!-- ================================================== lienzo -->
+  <main class="lienzo">
+
+    <!-- ---------------------------------------------- resumen -->
+    <section class="vista" id="vista-resumen">
+      <div class="encabezado">
+        <div>
+          <h1>Resumen</h1>
+          <p id="saludo">Todo lo que está pasando en el taller.</p>
+        </div>
+        <div class="acciones">
+          <button class="btn" id="btn-nuevo-atajo">+ Cargar vehículo</button>
+        </div>
+      </div>
+
+      <dl class="fichas" id="fichas"></dl>
+
+      <h2 style="font-size:26px;color:var(--bordo);margin-bottom:14px">Últimas consultas</h2>
+      <div id="ultimas"></div>
+    </section>
+
+    <!-- -------------------------------------------- vehículos -->
+    <section class="vista" id="vista-vehiculos" hidden>
+      <div class="encabezado">
+        <div>
+          <h1>Vehículos</h1>
+          <p>Cargá, editá y sacá de la venta cualquier pieza del taller.</p>
+        </div>
+        <div class="acciones">
+          <button class="btn" id="btn-nuevo">+ Nuevo vehículo</button>
+        </div>
+      </div>
+
+      <div class="barra">
+        <input type="search" id="buscar-vehiculos" placeholder="Buscar por título, material, descripción…">
+        <button class="chip" data-filtro-v="todo"        aria-pressed="true">Todos</button>
+        <button class="chip" data-filtro-v="disponible"  aria-pressed="false">Disponibles</button>
+        <button class="chip" data-filtro-v="reservado"   aria-pressed="false">Reservados</button>
+        <button class="chip" data-filtro-v="vendido"     aria-pressed="false">Vendidos</button>
+        <button class="chip" data-filtro-v="borrador"    aria-pressed="false">Borradores</button>
+      </div>
+
+      <div class="tabla-marco">
+        <table>
+          <thead>
+            <tr>
+              <th>Foto</th><th>Vehículo</th><th>Tipo</th><th>Estado</th>
+              <th>Precio</th><th>Fotos</th><th>Orden</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="tabla-vehiculos"></tbody>
+        </table>
+      </div>
+      <p class="cargando" id="cargando-vehiculos">Cargando…</p>
+    </section>
+
+    <!-- -------------------------------------------- consultas -->
+    <section class="vista" id="vista-consultas" hidden>
+      <div class="encabezado">
+        <div>
+          <h1>Consultas</h1>
+          <p>Acá quedan todos los correos que dejan desde el sitio.</p>
+        </div>
+        <div class="acciones">
+          <a class="btn ghost" href="/api/admin/consultas.csv">Bajar CSV</a>
+          <button class="btn ghost" id="copiar-mails">Copiar todos los mails</button>
+        </div>
+      </div>
+
+      <div class="barra">
+        <input type="search" id="buscar-consultas" placeholder="Buscar por nombre, correo o mensaje…">
+        <button class="chip" data-filtro-c="todo"       aria-pressed="true">Todas</button>
+        <button class="chip" data-filtro-c="nueva"      aria-pressed="false">Nuevas</button>
+        <button class="chip" data-filtro-c="leida"      aria-pressed="false">Leídas</button>
+        <button class="chip" data-filtro-c="contestada" aria-pressed="false">Contestadas</button>
+        <button class="chip" data-filtro-c="cerrada"    aria-pressed="false">Cerradas</button>
+      </div>
+
+      <div id="lista-consultas"></div>
+    </section>
+
+    <!-- --------------------------------------------- usuarios -->
+    <section class="vista" id="vista-usuarios" hidden>
+      <div class="encabezado">
+        <div>
+          <h1>Usuarios</h1>
+          <p>Clientes registrados y vendedores con acceso al panel.</p>
+        </div>
+        <div class="acciones">
+          <button class="btn" id="btn-nuevo-usuario">+ Nuevo vendedor</button>
+        </div>
+      </div>
+
+      <div class="tabla-marco">
+        <table>
+          <thead>
+            <tr><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Rol</th><th>Consultas</th><th>Alta</th><th></th></tr>
+          </thead>
+          <tbody id="tabla-usuarios"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------- textos -->
+    <section class="vista" id="vista-textos" hidden>
+      <div class="encabezado">
+        <div>
+          <h1>Textos del sitio</h1>
+          <p>Todo lo que dice la página pública, ordenado igual que las secciones de la página.</p>
+        </div>
+        <div class="acciones">
+          <a class="btn ghost" href="/" target="_blank" rel="noopener">Ver la página ↗</a>
+          <button class="btn" id="guardar-textos">Guardar todos los cambios</button>
+        </div>
+      </div>
+
+      <p class="aviso" id="aviso-textos" hidden></p>
+
+      <p class="pista">
+        Escribí y tocá <b>Guardar</b>: los cambios se ven en la página al instante.
+        Si ponés una palabra <b>*entre asteriscos*</b> sale resaltada en bordó.
+        En los textos largos, dejá un renglón en blanco para separar párrafos.
+      </p>
+
+      <div id="grupos-textos"><p class="cargando">Cargando los textos…</p></div>
+    </section>
+
+    <!-- ---------------------------------------------- mi cuenta -->
+    <section class="vista" id="vista-ajustes" hidden>
+      <div class="encabezado">
+        <div>
+          <h1>Mi cuenta</h1>
+          <p>Tu contraseña y el permiso para que los clientes se registren.</p>
+        </div>
+      </div>
+
+      <fieldset style="max-width:680px">
+        <legend>Mi contraseña</legend>
+        <p class="aviso" id="aviso-clave" hidden></p>
+        <form id="form-clave">
+          <div class="grilla-campos">
+            <div class="campo">
+              <label for="c-actual">Contraseña actual</label>
+              <input id="c-actual" type="password" autocomplete="current-password">
+            </div>
+            <div class="campo">
+              <label for="c-nueva">Contraseña nueva</label>
+              <input id="c-nueva" type="password" autocomplete="new-password">
+            </div>
+          </div>
+          <button class="btn ghost" type="submit">Cambiar contraseña</button>
+        </form>
+      </fieldset>
+
+      <fieldset style="max-width:680px;margin-top:32px">
+        <legend>Cuentas de clientes</legend>
+        <p class="aviso" id="aviso-registro" hidden></p>
+        <label class="campo-check">
+          <input type="checkbox" id="a-registro">
+          <span>Permitir que los clientes creen cuenta</span>
+        </label>
+        <p class="ayuda" style="opacity:.62;font-size:14px;margin-bottom:16px">Si lo apagás, solo pueden entrar las cuentas que ya existen y las que crees vos desde Usuarios.</p>
+        <button class="btn ghost" id="guardar-registro">Guardar</button>
+      </fieldset>
+    </section>
+
+  </main>
+</div>
+
+<!-- ================================================ cajón vehículo -->
+<div class="cajon" id="cajon" hidden>
+  <div class="cajon-hoja" role="dialog" aria-modal="true" aria-labelledby="cajon-titulo">
+    <div class="cajon-top">
+      <h2 id="cajon-titulo">Nuevo vehículo</h2>
+      <button class="cerrar" id="cerrar-cajon" aria-label="Cerrar">✕</button>
+    </div>
+
+    <div class="cajon-cuerpo">
+      <p class="aviso" id="aviso-cajon" hidden></p>
+
+      <form id="form-vehiculo">
+        <input type="hidden" id="v-id">
+
+        <fieldset>
+          <legend>Identidad</legend>
+          <div class="grilla-campos">
+            <div class="campo">
+              <label for="v-titulo">Título *</label>
+              <input id="v-titulo" type="text" required placeholder="Cupé italiano">
+            </div>
+            <div class="campo">
+              <label for="v-anio">Año del modelo</label>
+              <input id="v-anio" type="text" placeholder="1962">
+            </div>
+          </div>
+          <div class="campo">
+            <label for="v-subtitulo">Subtítulo</label>
+            <input id="v-subtitulo" type="text" placeholder="Chapa batida · laca bordó">
+          </div>
+          <div class="campo">
+            <label for="v-descripcion">Descripción larga</label>
+            <textarea id="v-descripcion" rows="5" placeholder="Cómo se hizo, qué tiene de especial, qué abre y qué gira…"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Ficha técnica</legend>
+          <div class="grilla-campos">
+            <div class="campo">
+              <label for="v-tipo">Tipo</label>
+              <select id="v-tipo">
+                <option value="auto">Auto</option>
+                <option value="moto">Moto</option>
+                <option value="barco">Barco</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="v-escala">Escala</label>
+              <input id="v-escala" type="text" value="1:8">
+            </div>
+            <div class="campo">
+              <label for="v-largo">Largo en milímetros</label>
+              <input id="v-largo" type="number" min="0" step="1" placeholder="567">
+            </div>
+            <div class="campo">
+              <label for="v-terminado">Terminado en (año)</label>
+              <input id="v-terminado" type="text" placeholder="1994">
+            </div>
+          </div>
+          <div class="campo">
+            <label for="v-materiales">Materiales</label>
+            <input id="v-materiales" type="text" placeholder="Chapa, bronce, cuero">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Características (las que quieras)</legend>
+          <div id="lista-caracteristicas"></div>
+          <button type="button" class="btn ghost chico" id="agregar-caracteristica">+ Agregar característica</button>
+          <p class="ayuda" style="opacity:.6;font-size:13px;margin-top:10px">Aparecen como filas en la ficha del vehículo. Ej: «Puertas y capot» → «abren».</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Venta</legend>
+          <div class="grilla-campos">
+            <div class="campo">
+              <label for="v-estado">Estado</label>
+              <select id="v-estado">
+                <option value="disponible">Disponible</option>
+                <option value="reservado">Reservado</option>
+                <option value="vendido">Vendido</option>
+                <option value="borrador">Borrador (no se publica)</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="v-moneda">Moneda</label>
+              <select id="v-moneda">
+                <option value="ARS">Pesos</option>
+                <option value="USD">Dólares</option>
+                <option value="EUR">Euros</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="v-precio">Precio</label>
+              <input id="v-precio" type="text" inputmode="decimal" placeholder="0">
+            </div>
+            <div class="campo">
+              <label for="v-orden">Orden en la grilla</label>
+              <input id="v-orden" type="number" step="1" value="0">
+            </div>
+          </div>
+          <label class="campo-check">
+            <input type="checkbox" id="v-mostrar-precio">
+            <span>Mostrar el precio en el sitio público</span>
+          </label>
+          <label class="campo-check">
+            <input type="checkbox" id="v-destacado">
+            <span>Destacar (aparece primero)</span>
+          </label>
+          <div class="campo fila">
+            <label for="v-color" style="margin:0">Color de placa</label>
+            <input id="v-color" type="color" value="#5C161D" style="width:56px;height:38px;padding:2px;cursor:pointer">
+            <span class="ayuda" style="margin:0">Se usa de fondo cuando el vehículo todavía no tiene foto.</span>
+          </div>
+        </fieldset>
+
+        <fieldset id="bloque-fotos">
+          <legend>Fotos</legend>
+          <div class="zona-fotos" id="zona-fotos">
+            Arrastrá las fotos acá o hacé clic para elegirlas<br>
+            <span style="opacity:.6">JPG, PNG o WEBP · hasta 8 MB cada una</span>
+          </div>
+          <input type="file" id="input-fotos" accept="image/jpeg,image/png,image/webp" multiple hidden>
+          <div class="galeria" id="galeria"></div>
+          <p class="ayuda" id="nota-fotos" style="opacity:.6;font-size:13px;margin-top:10px">Guardá el vehículo primero y después cargale las fotos.</p>
+        </fieldset>
+      </form>
+    </div>
+
+    <div class="cajon-pie">
+      <button class="btn peligro" id="borrar-vehiculo" hidden>Borrar vehículo</button>
+      <button class="btn ghost" id="cancelar-cajon">Cancelar</button>
+      <button class="btn" id="guardar-vehiculo">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================ cajón usuario -->
+<div class="cajon" id="cajon-usuario" hidden>
+  <div class="cajon-hoja" style="width:min(520px,100%)" role="dialog" aria-modal="true">
+    <div class="cajon-top">
+      <h2>Nuevo vendedor</h2>
+      <button class="cerrar" id="cerrar-usuario" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="cajon-cuerpo">
+      <p class="aviso" id="aviso-usuario" hidden></p>
+      <form id="form-usuario">
+        <div class="campo">
+          <label for="u-nombre">Nombre</label>
+          <input id="u-nombre" type="text" required>
+        </div>
+        <div class="campo">
+          <label for="u-email">Correo</label>
+          <input id="u-email" type="email" required>
+        </div>
+        <div class="campo">
+          <label for="u-telefono">Teléfono</label>
+          <input id="u-telefono" type="tel">
+        </div>
+        <div class="campo">
+          <label for="u-clave">Contraseña provisoria</label>
+          <input id="u-clave" type="text" required placeholder="Al menos 8 caracteres con letras y números">
+        </div>
+        <div class="campo">
+          <label for="u-rol">Rol</label>
+          <select id="u-rol">
+            <option value="admin">Vendedor (entra al panel)</option>
+            <option value="cliente">Cliente</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="cajon-pie">
+      <button class="btn ghost" id="cancelar-usuario">Cancelar</button>
+      <button class="btn" id="guardar-usuario">Crear cuenta</button>
+    </div>
+  </div>
+</div>
+
+<div class="brindis" id="brindis" role="status"></div>
+
+<script src="/js/comun.js"></script>
+<script src="/js/empresa.js"></script>
+</body>
+</html>

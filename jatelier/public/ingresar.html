@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingresar · Jartelier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/base.css">
+<style>
+body{min-height:100vh;display:flex;flex-direction:column}
+.escena{flex:1;display:grid;grid-template-columns:1.05fr .95fr;min-height:0}
+@media(max-width:940px){.escena{grid-template-columns:1fr}}
+
+/* costado ilustrado */
+.costado{
+  background:var(--bordo-hondo);color:var(--crema);padding:clamp(30px,5vw,64px);
+  display:flex;flex-direction:column;justify-content:space-between;gap:36px;position:relative;overflow:hidden;
+}
+@media(max-width:940px){.costado{display:none}}
+.costado .eyebrow{color:rgba(228,225,214,.55)}
+.costado .eyebrow::after{background:rgba(228,225,214,.22)}
+.costado h1{font-size:clamp(40px,4.6vw,68px);color:var(--crema);margin-top:20px;max-width:12ch}
+.costado h1 em{font-style:normal;color:var(--rojo)}
+.costado p{color:rgba(228,225,214,.72);max-width:40ch;margin-top:18px}
+.dibujo{opacity:.9}
+.dibujo svg{width:100%;height:auto;color:rgba(228,225,214,.28)}
+.dibujo .hi{color:var(--rojo)}
+.costado .datos{display:flex;gap:30px;flex-wrap:wrap;border-top:1px solid rgba(228,225,214,.2);padding-top:20px}
+.costado .datos b{display:block;font-family:var(--display);font-weight:600;font-size:34px;line-height:1;color:var(--crema)}
+.costado .datos span{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;opacity:.55}
+
+/* panel del formulario */
+.panel{padding:clamp(28px,4.5vw,60px);display:flex;flex-direction:column;justify-content:center;max-width:560px;width:100%;margin:0 auto}
+.volver{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--bordo);opacity:.7;margin-bottom:26px;display:inline-block}
+.volver:hover{opacity:1;color:var(--rojo)}
+.panel h2{font-size:clamp(34px,4vw,52px);color:var(--bordo);margin-bottom:8px}
+.panel .bajada{opacity:.72;margin-bottom:28px;font-size:16px}
+
+.solapas{display:flex;border:1px solid var(--regla-fuerte);margin-bottom:28px}
+.solapas button{
+  flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  padding:13px 10px;background:none;border:none;color:var(--bordo);cursor:pointer;transition:all .2s;
+}
+.solapas button+button{border-left:1px solid var(--regla-fuerte)}
+.solapas button[aria-selected="true"]{background:var(--bordo);color:var(--crema)}
+
+form[hidden]{display:none}
+.pie-form{margin-top:22px;font-size:14px;opacity:.7;line-height:1.55}
+.pie-form a{color:var(--bordo);border-bottom:1px solid var(--regla-fuerte)}
+.pie-form a:hover{color:var(--rojo);border-color:var(--rojo)}
+.medidor{height:3px;background:var(--regla);margin-top:8px;overflow:hidden}
+.medidor i{display:block;height:100%;width:0;background:var(--rojo);transition:width .3s,background .3s}
+</style>
+</head>
+<body>
+
+<div class="escena">
+  <aside class="costado">
+    <div>
+      <p class="eyebrow mono">Jartelier · Escala 1:8</p>
+      <h1>Entrá a ver <em>los que quedan</em></h1>
+      <p>Guardá tus favoritos, seguí el estado de tus consultas y enterate primero cuando sale a la venta uno nuevo.</p>
+    </div>
+
+    <div class="dibujo">
+      <svg viewBox="0 0 1100 430" role="img" aria-label="Contorno de un cupé a escala">
+        <g fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M132 334 C128 304 142 288 176 281 L300 271 C358 265 398 253 428 218 C452 192 500 180 560 178 C618 177 648 188 670 210 L700 242 C706 248 716 253 742 254 L900 253 C958 251 984 259 1000 275 C1014 291 1018 313 1012 334"/>
+          <path d="M1012 334 L940 334 A62 62 0 0 0 816 334 L320 334 A62 62 0 0 0 196 334 L132 334"/>
+          <circle cx="878" cy="352" r="60"/>
+          <circle cx="258" cy="352" r="60"/>
+        </g>
+        <g class="hi" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M452 214 C474 194 512 186 556 185 L640 186 L664 212 Z"/>
+          <circle cx="878" cy="352" r="24"/>
+          <circle cx="258" cy="352" r="24"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="datos">
+      <div><b>+30</b><span>Terminados</span></div>
+      <div><b>1:8</b><span>Escala</span></div>
+      <div><b>40</b><span>Años de taller</span></div>
+    </div>
+  </aside>
+
+  <main class="panel">
+    <a class="volver" href="/">← Volver al sitio</a>
+
+    <h2 id="titulo">Ingresar</h2>
+    <p class="bajada" id="bajada">Entrá con tu correo y tu contraseña.</p>
+
+    <div class="solapas" role="tablist">
+      <button role="tab" id="tab-ingreso"  aria-selected="true"  aria-controls="form-ingreso">Ya tengo cuenta</button>
+      <button role="tab" id="tab-registro" aria-selected="false" aria-controls="form-registro">Crear cuenta</button>
+    </div>
+
+    <p class="aviso" id="aviso" hidden></p>
+
+    <!-- ---------------------------------------------------------- ingreso -->
+    <form id="form-ingreso" novalidate>
+      <div class="campo">
+        <label for="i-email">Correo</label>
+        <input id="i-email" name="email" type="email" autocomplete="email" required placeholder="vos@correo.com">
+      </div>
+      <div class="campo">
+        <label for="i-clave">Contraseña</label>
+        <input id="i-clave" name="clave" type="password" autocomplete="current-password" required placeholder="········">
+      </div>
+      <button class="btn ancho" type="submit" id="btn-ingresar">Ingresar</button>
+      <p class="pie-form">¿Todavía no tenés cuenta? <a href="#" id="ir-registro">Creala en un minuto</a>.</p>
+    </form>
+
+    <!-- --------------------------------------------------------- registro -->
+    <form id="form-registro" novalidate hidden>
+      <div class="campo">
+        <label for="r-nombre">Nombre y apellido</label>
+        <input id="r-nombre" name="nombre" type="text" autocomplete="name" required placeholder="Cómo te llamás">
+      </div>
+      <div class="grilla-campos">
+        <div class="campo">
+          <label for="r-email">Correo</label>
+          <input id="r-email" name="email" type="email" autocomplete="email" required placeholder="vos@correo.com">
+        </div>
+        <div class="campo">
+          <label for="r-telefono">Teléfono <span style="opacity:.6">(opcional)</span></label>
+          <input id="r-telefono" name="telefono" type="tel" autocomplete="tel" placeholder="+54 9 …">
+        </div>
+      </div>
+      <div class="campo">
+        <label for="r-clave">Contraseña</label>
+        <input id="r-clave" name="clave" type="password" autocomplete="new-password" required placeholder="Al menos 8 caracteres">
+        <div class="medidor"><i id="fuerza"></i></div>
+        <p class="ayuda">Mínimo 8 caracteres, con letras y números.</p>
+      </div>
+      <div class="campo">
+        <label for="r-clave2">Repetir contraseña</label>
+        <input id="r-clave2" name="clave2" type="password" autocomplete="new-password" required placeholder="········">
+      </div>
+      <button class="btn ancho" type="submit" id="btn-crear">Crear mi cuenta</button>
+      <p class="pie-form">Creando la cuenta aceptás que guardemos tu correo para contestarte las consultas. Nada más.</p>
+    </form>
+  </main>
+</div>
+
+<script src="/js/comun.js"></script>
+<script>
+(function () {
+  const parametros = new URLSearchParams(location.search);
+  const destino = parametros.get('destino') || '';
+  const aviso = document.getElementById('aviso');
+
+  const solapas = {
+    ingreso:  { boton: document.getElementById('tab-ingreso'),  form: document.getElementById('form-ingreso') },
+    registro: { boton: document.getElementById('tab-registro'), form: document.getElementById('form-registro') },
+  };
+  const titulo = document.getElementById('titulo');
+  const bajada = document.getElementById('bajada');
+
+  function mostrar(cual) {
+    for (const [nombre, s] of Object.entries(solapas)) {
+      const activa = nombre === cual;
+      s.boton.setAttribute('aria-selected', activa ? 'true' : 'false');
+      s.form.hidden = !activa;
+    }
+    titulo.textContent = cual === 'ingreso' ? 'Ingresar' : 'Crear cuenta';
+    bajada.textContent =
+      cual === 'ingreso'
+        ? 'Entrá con tu correo y tu contraseña.'
+        : 'Con la cuenta guardás favoritos y seguís tus consultas.';
+    aviso.hidden = true;
+  }
+
+  solapas.ingreso.boton.addEventListener('click', () => mostrar('ingreso'));
+  solapas.registro.boton.addEventListener('click', () => mostrar('registro'));
+  document.getElementById('ir-registro').addEventListener('click', (e) => {
+    e.preventDefault();
+    mostrar('registro');
+  });
+
+  if (parametros.get('modo') === 'registro') mostrar('registro');
+  if (parametros.get('aviso') === 'sin-permiso') {
+    avisar(aviso, 'Esa sección es solo para vendedores.', 'error', 0);
+  }
+  if (parametros.get('aviso') === 'sesion') {
+    avisar(aviso, 'Tenés que ingresar para seguir.', 'error', 0);
+  }
+
+  // Si ya hay sesión abierta, no tiene sentido quedarse acá.
+  sesion().then((u) => {
+    if (u) location.replace(destino || (u.rol === 'admin' ? '/empresa.html' : '/cuenta.html'));
+  });
+
+  function aDonde(usuario) {
+    if (destino) return destino;
+    return usuario.rol === 'admin' ? '/empresa.html' : '/';
+  }
+
+  /* --------------------------------------------------------- ingreso */
+  solapas.ingreso.form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const boton = document.getElementById('btn-ingresar');
+    const email = document.getElementById('i-email').value.trim();
+    const clave = document.getElementById('i-clave').value;
+
+    if (!email || !clave) {
+      return avisar(aviso, 'Completá el correo y la contraseña.', 'error');
+    }
+    boton.disabled = true;
+    boton.textContent = 'Entrando…';
+    try {
+      const datos = await API.post('/api/auth/ingreso', { email, clave });
+      location.href = aDonde(datos.usuario);
+    } catch (err) {
+      avisar(aviso, err.message, 'error', 0);
+      boton.disabled = false;
+      boton.textContent = 'Ingresar';
+    }
+  });
+
+  /* -------------------------------------------------------- registro */
+  const clave = document.getElementById('r-clave');
+  const fuerza = document.getElementById('fuerza');
+  clave.addEventListener('input', () => {
+    const v = clave.value;
+    let puntos = 0;
+    if (v.length >= 8) puntos++;
+    if (/[a-zA-Z]/.test(v) && /[0-9]/.test(v)) puntos++;
+    if (v.length >= 12) puntos++;
+    if (/[^a-zA-Z0-9]/.test(v)) puntos++;
+    fuerza.style.width = (puntos / 4) * 100 + '%';
+    fuerza.style.background =
+      puntos <= 1 ? 'var(--rojo)' : puntos === 2 ? '#8A6A22' : 'var(--verde)';
+  });
+
+  solapas.registro.form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const boton = document.getElementById('btn-crear');
+    const cuerpo = {
+      nombre: document.getElementById('r-nombre').value.trim(),
+      email: document.getElementById('r-email').value.trim(),
+      telefono: document.getElementById('r-telefono').value.trim(),
+      clave: clave.value,
+    };
+    const repetida = document.getElementById('r-clave2').value;
+
+    if (cuerpo.nombre.length < 2) return avisar(aviso, 'Poné tu nombre.', 'error');
+    if (!cuerpo.email) return avisar(aviso, 'Falta el correo.', 'error');
+    if (cuerpo.clave !== repetida) return avisar(aviso, 'Las dos contraseñas no coinciden.', 'error');
+
+    boton.disabled = true;
+    boton.textContent = 'Creando…';
+    try {
+      const datos = await API.post('/api/auth/registro', cuerpo);
+      location.href = aDonde(datos.usuario);
+    } catch (err) {
+      avisar(aviso, err.message, 'error', 0);
+      boton.disabled = false;
+      boton.textContent = 'Crear mi cuenta';
+    }
+  });
+})();
+</script>
+</body>
+</html>

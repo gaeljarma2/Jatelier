@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi cuenta · Jartelier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/base.css">
+<style>
+.cuerpo{padding:clamp(30px,5vw,64px) var(--pad);max-width:1100px;margin:0 auto}
+.cuerpo h1{font-size:clamp(36px,5.5vw,64px);color:var(--bordo)}
+.cuerpo .bajada{opacity:.68;margin-top:8px;margin-bottom:36px}
+h2{font-size:30px;color:var(--bordo);margin-bottom:16px;margin-top:44px}
+h2:first-of-type{margin-top:0}
+.cols{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(24px,4vw,56px);align-items:start}
+@media(max-width:860px){.cols{grid-template-columns:1fr}}
+.tarjetas{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.mini-card{border:1px solid var(--regla-fuerte);background:var(--crema-claro);display:block}
+.mini-card .foto{height:120px;background:var(--bordo-hondo);position:relative;overflow:hidden}
+.mini-card .foto img{width:100%;height:100%;object-fit:cover}
+.mini-card .foto svg{width:80%;height:100%;margin:0 auto;color:rgba(228,225,214,.8)}
+.mini-card .txt{padding:12px 14px}
+.mini-card b{font-family:var(--display);font-weight:600;font-size:20px;text-transform:uppercase;color:var(--bordo);display:block;line-height:1.05}
+.mini-card span{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+.consulta{border:1px solid var(--regla-fuerte);background:var(--crema-claro);padding:15px 18px;margin-bottom:10px}
+.consulta .cab{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.consulta .cab b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bordo)}
+.consulta p{white-space:pre-wrap;font-size:15px}
+.panel-datos{border:1px solid var(--regla-fuerte);background:var(--crema-claro);padding:22px}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="coupe" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M132 334 C128 304 142 288 176 281 L300 271 C358 265 398 253 428 218 C452 192 500 180 560 178 C618 177 648 188 670 210 L700 242 C706 248 716 253 742 254 L900 253 C958 251 984 259 1000 275 C1014 291 1018 313 1012 334"/>
+    <path d="M1012 334 L940 334 A62 62 0 0 0 816 334 L320 334 A62 62 0 0 0 196 334 L132 334"/>
+    <circle cx="878" cy="352" r="60"/><circle cx="258" cy="352" r="60"/>
+  </g>
+  <g id="moto" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="95" cy="180" r="52"/><circle cx="305" cy="180" r="52"/>
+    <circle cx="95" cy="180" r="18"/><circle cx="305" cy="180" r="18"/>
+    <path d="M40 172 A57 57 0 0 1 152 168"/><path d="M252 152 A56 56 0 0 1 350 164"/>
+    <path d="M150 130 C161 113 190 105 216 108 L236 113 C241 120 238 131 229 136 L176 141 C161 141 150 138 150 130 Z"/>
+    <path d="M176 143 L231 141 L236 175 L192 182 L172 168 Z"/>
+    <path d="M266 120 L303 180 M281 116 L317 178"/>
+  </g>
+  <g id="barco" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 122 L302 122 C322 122 332 130 327 142 C320 157 300 164 268 164 L92 164 C62 164 38 150 26 134 Z"/>
+    <path d="M118 96 L212 96 L216 122 L114 122 Z"/><path d="M166 96 L166 42"/>
+  </g>
+</defs></svg>
+
+<header class="top">
+  <div class="mark"><b>JARTELIER</b><span class="mono">Mi cuenta</span></div>
+  <nav class="nav mono">
+    <a href="/">El sitio</a>
+    <a href="/#modelos">Autos y motos</a>
+    <a href="/#encargo">Encargos</a>
+  </nav>
+  <div class="top-acciones" id="top-acciones"></div>
+</header>
+
+<main class="cuerpo">
+  <h1 id="hola">Mi cuenta</h1>
+  <p class="bajada" id="bajada">Tus favoritos y el estado de tus consultas.</p>
+
+  <p class="aviso" id="aviso-general" hidden></p>
+
+  <div class="cols">
+    <div>
+      <h2>Guardados</h2>
+      <div id="favoritos"><p class="cargando">Cargando…</p></div>
+
+      <h2>Mis consultas</h2>
+      <div id="consultas"><p class="cargando">Cargando…</p></div>
+    </div>
+
+    <div>
+      <h2>Mis datos</h2>
+      <div class="panel-datos">
+        <p class="aviso" id="aviso-datos" hidden></p>
+        <form id="form-datos">
+          <div class="campo">
+            <label for="d-nombre">Nombre</label>
+            <input id="d-nombre" type="text">
+          </div>
+          <div class="campo">
+            <label for="d-email">Correo</label>
+            <input id="d-email" type="email" disabled>
+            <p class="ayuda">El correo no se cambia desde acá. Escribinos si lo necesitás.</p>
+          </div>
+          <div class="campo">
+            <label for="d-telefono">Teléfono</label>
+            <input id="d-telefono" type="tel">
+          </div>
+          <button class="btn" type="submit">Guardar datos</button>
+        </form>
+
+        <hr style="border:none;border-top:1px solid var(--regla);margin:26px 0">
+
+        <p class="aviso" id="aviso-clave" hidden></p>
+        <form id="form-clave">
+          <div class="campo">
+            <label for="d-actual">Contraseña actual</label>
+            <input id="d-actual" type="password" autocomplete="current-password">
+          </div>
+          <div class="campo">
+            <label for="d-nueva">Contraseña nueva</label>
+            <input id="d-nueva" type="password" autocomplete="new-password">
+          </div>
+          <button class="btn ghost" type="submit">Cambiar contraseña</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="pie mono">
+  <span>Jartelier · Autos y motos a escala 1:8</span>
+  <a href="/">Volver al sitio</a>
+</div>
+
+<script src="/js/comun.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const SIMBOLO = { auto: 'coupe', moto: 'moto', barco: 'barco', otro: 'coupe' };
+  const VIEWBOX = { auto: '125 168 895 254', moto: '25 35 345 200', barco: '15 35 325 140', otro: '125 168 895 254' };
+
+  if (new URLSearchParams(location.search).get('aviso') === 'sin-permiso') {
+    avisar($('aviso-general'), 'El modo empresa es solo para vendedores.', 'error', 0);
+  }
+
+  (async function arrancar() {
+    const u = await sesion();
+    if (!u) return location.replace('/ingresar.html?destino=/cuenta.html');
+
+    pintarAccionesTop($('top-acciones'));
+    $('hola').textContent = 'Hola, ' + u.nombre.split(' ')[0];
+    $('d-nombre').value = u.nombre;
+    $('d-email').value = u.email;
+    $('d-telefono').value = u.telefono || '';
+
+    /* favoritos */
+    try {
+      const { vehiculos } = await API.get('/api/favoritos');
+      $('favoritos').innerHTML = vehiculos.length
+        ? '<div class="tarjetas">' + vehiculos.map(miniTarjeta).join('') + '</div>'
+        : '<p class="vacio">Todavía no guardaste ninguno · <a href="/#modelos" style="color:var(--rojo)">mirá los que hay</a></p>';
+    } catch {
+      $('favoritos').innerHTML = '<p class="vacio">No pudimos cargar tus guardados</p>';
+    }
+
+    /* consultas */
+    try {
+      const { consultas } = await API.get('/api/mis-consultas');
+      $('consultas').innerHTML = consultas.length
+        ? consultas
+            .map(
+              (c) =>
+                '<article class="consulta"><div class="cab">' +
+                '<b>' + fecha(c.creado, true) + (c.vehiculo_titulo ? ' · ' + escapar(c.vehiculo_titulo) : '') + '</b>' +
+                '<span class="pill ' + c.estado + '">' + c.estado + '</span></div>' +
+                '<p>' + escapar(c.mensaje) + '</p></article>'
+            )
+            .join('')
+        : '<p class="vacio">Todavía no mandaste ninguna consulta</p>';
+    } catch {
+      $('consultas').innerHTML = '<p class="vacio">No pudimos cargar tus consultas</p>';
+    }
+  })();
+
+  function miniTarjeta(v) {
+    const foto = v.fotos[0];
+    const visual = foto
+      ? '<img src="' + foto.url + '" alt="">'
+      : '<svg viewBox="' + VIEWBOX[v.tipo] + '"><use href="#' + SIMBOLO[v.tipo] +
+        '" stroke-width="' + (v.tipo === 'auto' ? 12 : 5) + '"/></svg>';
+    return (
+      '<a class="mini-card" href="/?vehiculo=' + v.id + '">' +
+      '<div class="foto" style="background:' + escapar(v.color_placa) + '">' + visual + '</div>' +
+      '<div class="txt"><b>' + escapar(v.titulo) + '</b><span>' +
+      escapar((v.anio_modelo || '') + ' · ' + v.estado) + '</span></div></a>'
+    );
+  }
+
+  $('form-datos').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      await API.patch('/api/auth/yo', {
+        nombre: $('d-nombre').value.trim(),
+        telefono: $('d-telefono').value.trim(),
+      });
+      avisar($('aviso-datos'), 'Datos guardados.', 'ok');
+    } catch (err) {
+      avisar($('aviso-datos'), err.message, 'error', 0);
+    }
+  });
+
+  $('form-clave').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      await API.post('/api/auth/clave', {
+        actual: $('d-actual').value,
+        nueva: $('d-nueva').value,
+      });
+      $('d-actual').value = '';
+      $('d-nueva').value = '';
+      avisar($('aviso-clave'), 'Contraseña cambiada.', 'ok');
+    } catch (err) {
+      avisar($('aviso-clave'), err.message, 'error', 0);
+    }
+  });
+})();
+</script>
+</body>
+</html>
